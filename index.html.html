@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Algorithmic Justice Project</title>
+<meta name="description" content="A youth-led nonprofit researching and exposing bias in AI systems used in criminal justice, immigration, and corporate hiring."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --deep:#26215C;--purple:#3C3489;--mid:#534AB7;--light:#7F77DD;
+  --pale:#AFA9EC;--lightest:#EEEDFE;--white:#FFFFFF;--off:#F8F8FC;
+  --text:#1A1830;--muted:#5A5680;--border:#E0DEFA;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--white);line-height:1.7;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo{width:36px;height:36px;background:var(--purple);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:13px;color:var(--lightest);letter-spacing:.5px;}
+.nav-name{font-size:15px;font-weight:500;color:var(--deep);}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;font-weight:400;transition:color .2s;}
+.nav-links a:hover{color:var(--purple);}
+.nav-cta{background:var(--purple)!important;color:var(--white)!important;padding:8px 18px;border-radius:6px;font-weight:500!important;}
+.nav-cta:hover{background:var(--deep)!important;}
+.admin-btn{background:none;border:1.5px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.admin-btn:hover{border-color:var(--mid);color:var(--mid);}
+
+/* HERO */
+.hero{padding:140px 2rem 100px;max-width:960px;margin:0 auto;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--lightest);color:var(--mid);font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;margin-bottom:2rem;letter-spacing:.05em;text-transform:uppercase;}
+.hero-tag span{width:6px;height:6px;border-radius:50%;background:var(--mid);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,72px);font-weight:700;line-height:1.08;color:var(--deep);margin-bottom:1.5rem;letter-spacing:-1px;}
+.hero h1 em{font-style:italic;color:var(--mid);}
+.hero-sub{font-size:18px;color:var(--muted);max-width:620px;line-height:1.7;margin-bottom:2.5rem;font-weight:300;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-primary{background:var(--purple);color:var(--white);padding:14px 28px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:500;transition:background .2s,transform .1s;display:inline-block;}
+.btn-primary:hover{background:var(--deep);transform:translateY(-1px);}
+.btn-ghost{color:var(--purple);padding:14px 28px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:500;border:1.5px solid var(--border);transition:border-color .2s,background .2s;display:inline-block;}
+.btn-ghost:hover{border-color:var(--pale);background:var(--lightest);}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);}
+.hero-stat-num{font-size:28px;font-weight:500;color:var(--purple);font-family:'Playfair Display',serif;}
+.hero-stat-label{font-size:13px;color:var(--muted);margin-top:2px;}
+
+/* SECTIONS */
+section{padding:80px 2rem;}
+.section-inner{max-width:960px;margin:0 auto;}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:700;color:var(--deep);line-height:1.15;margin-bottom:1rem;letter-spacing:-.5px;}
+.section-body{font-size:16px;color:var(--muted);max-width:580px;line-height:1.8;font-weight:300;}
+
+/* MISSION */
+#mission{background:var(--off);}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem;}
+.mission-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden;}
+.mission-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mid);}
+.mission-card-icon{width:44px;height:44px;background:var(--lightest);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1rem;}
+.mission-card h3{font-size:17px;font-weight:500;color:var(--deep);margin-bottom:.6rem;}
+.mission-card p{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+.pillar{padding:1.75rem;border:1px solid var(--border);border-radius:14px;transition:border-color .2s,box-shadow .2s;}
+.pillar:hover{border-color:var(--pale);box-shadow:0 4px 24px rgba(83,74,183,.08);}
+.pillar-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:600;color:var(--lightest);line-height:1;margin-bottom:.75rem;}
+.pillar h3{font-size:16px;font-weight:500;color:var(--deep);margin-bottom:.5rem;}
+.pillar p{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* FOCUS */
+#focus{background:var(--deep);}
+#focus .section-label{color:var(--pale);}
+#focus .section-title{color:var(--white);}
+#focus .section-body{color:var(--pale);}
+.focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border-radius:16px;overflow:hidden;margin-top:3rem;}
+.focus-card{background:rgba(255,255,255,.04);padding:2.5rem 2rem;transition:background .2s;}
+.focus-card:hover{background:rgba(255,255,255,.08);}
+.focus-icon{font-size:28px;margin-bottom:1rem;display:block;}
+.focus-card h3{font-size:17px;font-weight:500;color:var(--white);margin-bottom:.75rem;}
+.focus-card p{font-size:13px;color:var(--pale);line-height:1.7;font-weight:300;}
+
+/* REPORTS */
+#reports{background:var(--off);}
+.reports-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;}
+.reports-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+.report-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.75rem;text-decoration:none;display:block;transition:border-color .2s,transform .2s;}
+.report-card:hover{border-color:var(--pale);transform:translateY(-2px);}
+.report-meta{display:flex;gap:10px;align-items:center;margin-bottom:1rem;}
+.report-tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--lightest);color:var(--mid);}
+.report-date{font-size:12px;color:var(--muted);}
+.report-card h3{font-size:17px;font-weight:500;color:var(--deep);margin-bottom:.5rem;line-height:1.35;}
+.report-card p{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300;}
+.report-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--mid);margin-top:1rem;}
+.report-empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;border:2px dashed var(--border);border-radius:14px;color:var(--muted);}
+.report-empty p{font-size:14px;margin-top:.5rem;font-weight:300;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem;}
+.about-quote{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--deep);line-height:1.5;border-left:3px solid var(--mid);padding-left:1.5rem;margin-bottom:1.5rem;}
+.about-body{font-size:15px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1rem;}
+.about-founder{display:flex;align-items:center;gap:12px;margin-top:1.5rem;}
+.founder-avatar{width:48px;height:48px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500;color:var(--lightest);}
+.founder-info strong{display:block;font-size:14px;font-weight:500;color:var(--deep);}
+.founder-info span{font-size:12px;color:var(--muted);}
+.about-card{background:var(--lightest);border-radius:16px;padding:2.5rem;}
+.about-card-item{display:flex;gap:14px;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(83,74,183,.15);}
+.about-card-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.about-card-dot{width:8px;height:8px;border-radius:50%;background:var(--mid);flex-shrink:0;margin-top:8px;}
+.about-card-item strong{display:block;font-size:14px;font-weight:500;color:var(--deep);margin-bottom:2px;}
+.about-card-item span{font-size:13px;color:var(--muted);font-weight:300;}
+
+/* CONTACT */
+#contact{background:var(--deep);}
+#contact .section-title{color:var(--white);}
+#contact .section-label{color:var(--pale);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;}
+.contact-text{font-size:16px;color:var(--pale);line-height:1.8;font-weight:300;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:12px;}
+.contact-link{display:flex;align-items:center;gap:12px;color:var(--pale);text-decoration:none;font-size:14px;transition:color .2s;}
+.contact-link:hover{color:var(--white);}
+.contact-link-icon{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.contact-form{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:2rem;}
+.form-group{margin-bottom:1.25rem;}
+.form-group label{display:block;font-size:12px;font-weight:500;color:var(--pale);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase;}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:12px 14px;color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;font-weight:300;outline:none;transition:border-color .2s;}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.3);}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--light);}
+.form-group textarea{resize:vertical;min-height:100px;}
+.form-group select option{background:var(--deep);color:var(--white);}
+.form-submit{width:100%;background:var(--mid);color:var(--white);border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
+.form-submit:hover{background:var(--purple);}
+
+/* FOOTER */
+footer{background:#1A1628;padding:2rem;}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-brand{font-size:14px;font-weight:500;color:var(--pale);}
+.footer-copy{font-size:12px;color:rgba(174,169,236,.5);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{font-size:13px;color:rgba(174,169,236,.6);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--pale);}
+
+/* ADMIN MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,22,40,.7);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:20px;padding:2.5rem;width:90%;max-width:660px;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;}
+.modal-header h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--deep);}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;}
+.modal-close:hover{color:var(--deep);}
+.modal-section{margin-bottom:2rem;}
+.modal-section h3{font-size:14px;font-weight:500;color:var(--deep);margin-bottom:1rem;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.admin-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.admin-field{margin-bottom:0;}
+.admin-field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;}
+.admin-field input,.admin-field textarea,.admin-field select{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color .2s;}
+.admin-field input:focus,.admin-field textarea:focus{border-color:var(--mid);}
+.admin-field textarea{resize:vertical;min-height:70px;}
+.admin-save{background:var(--purple);color:var(--white);border:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.admin-save:hover{background:var(--deep);}
+.admin-save-all{width:100%;margin-top:1rem;}
+.report-form{background:var(--off);border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.report-form-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.report-form-header span{font-size:13px;font-weight:500;color:var(--deep);}
+.remove-report{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;}
+.remove-report:hover{color:#c0392b;}
+.add-report-btn{display:flex;align-items:center;gap:8px;background:none;border:1.5px dashed var(--border);color:var(--mid);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;width:100%;justify-content:center;margin-top:.5rem;}
+.add-report-btn:hover{border-color:var(--mid);background:var(--lightest);}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--deep);color:var(--white);padding:14px 22px;border-radius:10px;font-size:14px;font-weight:500;z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+.password-screen{display:flex;flex-direction:column;gap:1rem;}
+.password-screen input{width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.password-screen input:focus{border-color:var(--mid);}
+.password-err{color:#c0392b;font-size:13px;display:none;}
+
+/* ANIMATE */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* MOBILE */
+@media(max-width:768px){
+  .mission-grid,.pillars,.focus-grid,.reports-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:1.5rem;flex-wrap:wrap;}
+  .nav-links{display:none;}
+  .footer-inner{flex-direction:column;gap:1rem;}
+  .reports-header{flex-direction:column;align-items:flex-start;gap:1rem;}
+  .admin-stat-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Saved successfully</div>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminOverlay">
+  <div class="modal" id="adminModal">
+    <div id="passwordScreen">
+      <div class="modal-header">
+        <h2>Admin Login</h2>
+        <button class="modal-close" onclick="closeAdmin()">×</button>
+      </div>
+      <div class="password-screen">
+        <p style="font-size:14px;color:var(--muted);">Enter your admin password to edit the site.</p>
+        <input type="password" id="pwInput" placeholder="Password" onkeydown="if(event.key==='Enter')checkPw()"/>
+        <p class="password-err" id="pwErr">Incorrect password. Try again.</p>
+        <button class="admin-save" onclick="checkPw()">Login</button>
+      </div>
+    </div>
+    <div id="adminPanel" style="display:none;">
+      <div class="modal-header">
+        <h2>Update Site</h2>
+        <button class="modal-close" onclick="closeAdmin()">×</button>
+      </div>
+      <div class="modal-section">
+        <h3>How to update your site</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;">To update stats or add a report, just message Claude and say exactly what you want changed. Claude will give you an updated file in seconds — re-upload it to go live.</p>
+        <div style="background:var(--lightest);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <p style="font-size:13px;font-weight:500;color:var(--deep);margin-bottom:.5rem;">📊 To update a stat, say:</p>
+          <p style="font-size:13px;color:var(--muted);font-style:italic;">"Update my site — people reached is now 47"</p>
+        </div>
+        <div style="background:var(--lightest);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;">
+          <p style="font-size:13px;font-weight:500;color:var(--deep);margin-bottom:.5rem;">📄 To add a report, say:</p>
+          <p style="font-size:13px;color:var(--muted);font-style:italic;">"Add a report — title: COMPAS Bias Audit, summary: [your summary], type: Bias Audit, date: October 2025, url: [your pdf link]"</p>
+        </div>
+        <button class="admin-save" style="width:100%;" onclick="closeAdmin()">Got it</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-logo">AJP</div>
+    <span class="nav-name">Algorithmic Justice Project</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#what-we-do">What We Do</a></li>
+    <li><a href="#reports">Reports</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag"><span></span> Youth-Led · Michigan Nonprofit · Est. 2026</div>
+  <h1>Holding <em>algorithms</em><br/>accountable.</h1>
+  <p class="hero-sub">We research, expose, and advocate against biased AI systems used in criminal sentencing, immigration decisions, and corporate hiring — and demand legal accountability for the communities they harm.</p>
+  <div class="hero-actions">
+    <a href="#reports" class="btn-primary">Read Our Reports</a>
+    <a href="#about" class="btn-ghost">Our Mission</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num" id="stat-reports">0</div>
+      <div class="hero-stat-label">Reports Published</div>
+    </div>
+    <div>
+      <div class="hero-stat-num" id="stat-people">0</div>
+      <div class="hero-stat-label">People Reached</div>
+    </div>
+    <div>
+      <div class="hero-stat-num" id="stat-states">1</div>
+      <div class="hero-stat-label">State Incorporated</div>
+    </div>
+    <div>
+      <div class="hero-stat-num" id="stat-year">2026</div>
+      <div class="hero-stat-label">Founded</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Our Mission</div>
+      <h2 class="section-title">AI is making life-altering<br/>decisions. Nobody's watching.</h2>
+      <p class="section-body">Algorithms decide who gets bail, who gets flagged at the border, and who gets a job interview. Most of the time, no one — not even the judge — knows the system is biased. We change that.</p>
+    </div>
+    <div class="mission-grid fade-in">
+      <div class="mission-card">
+        <div class="mission-card-icon">🔍</div>
+        <h3>We find the bias</h3>
+        <p>We audit publicly documented AI tools used by courts, immigration agencies, and corporations — analyzing their accuracy data, demographic disparities, and legal vulnerabilities.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-icon">📄</div>
+        <h3>We publish the evidence</h3>
+        <p>Our research reports are free, public, and written to be understood by anyone — not just lawyers. We cite everything. We name names.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-icon">🏛️</div>
+        <h3>We advocate for change</h3>
+        <p>We submit public comments on AI legislation, meet with state legislators, and partner with civil liberties organizations to turn our research into policy reform.</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-icon">📢</div>
+        <h3>We educate communities</h3>
+        <p>Through free Know Your AI Rights workshops, we teach affected communities — immigrants, defendants, job seekers — how algorithms affect their lives and what they can do about it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section id="what-we-do">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Research. Expose. Advocate.</h2>
+      <p class="section-body">Three pillars, one mission — ensuring that the algorithms shaping people's lives are transparent, accurate, and legally accountable.</p>
+    </div>
+    <div class="pillars fade-in">
+      <div class="pillar"><div class="pillar-num">01</div><h3>Bias Audits</h3><p>We analyze AI tools like COMPAS — the sentencing algorithm used in 20+ states — publishing original research on racial disparities, accuracy failures, and due process violations.</p></div>
+      <div class="pillar"><div class="pillar-num">02</div><h3>Policy Advocacy</h3><p>We submit formal public comments on state and federal AI legislation, request meetings with legislators, and publish quarterly legislative trackers on algorithmic accountability bills.</p></div>
+      <div class="pillar"><div class="pillar-num">03</div><h3>FOIA Investigations</h3><p>We file Freedom of Information Act requests to obtain government contracts, accuracy data, and demographic breakdowns of AI systems that agencies refuse to disclose voluntarily.</p></div>
+      <div class="pillar"><div class="pillar-num">04</div><h3>Community Workshops</h3><p>Free 90-minute Know Your AI Rights workshops for affected communities — teaching people how algorithmic tools affect bail, visas, and hiring, and what legal options exist.</p></div>
+      <div class="pillar"><div class="pillar-num">05</div><h3>Corporate Investigations</h3><p>We investigate the companies selling biased AI to governments — analyzing their lobbying, contracts, and the gap between their marketing claims and actual accuracy records.</p></div>
+      <div class="pillar"><div class="pillar-num">06</div><h3>Chapter Network</h3><p>We're building a statewide network of student chapters doing this research in their own communities — multiplying our reach and creating the next generation of algorithmic accountability advocates.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOCUS -->
+<section id="focus">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Focus Areas</div>
+      <h2 class="section-title">Where algorithms<br/>cause the most harm.</h2>
+      <p class="section-body">We concentrate our research where algorithmic bias has the most severe, documented impact on civil rights.</p>
+    </div>
+    <div class="focus-grid fade-in">
+      <div class="focus-card"><span class="focus-icon">⚖️</span><h3>Criminal Justice</h3><p>Risk assessment tools like COMPAS influence bail, sentencing, and parole — with documented racial disparities that violate due process. We audit these tools and demand disclosure requirements.</p></div>
+      <div class="focus-card"><span class="focus-icon">🌍</span><h3>Immigration</h3><p>ICE and USCIS use algorithmic risk-scoring to flag individuals for enforcement. These systems operate with almost no outside oversight. We investigate them through FOIA and independent analysis.</p></div>
+      <div class="focus-card"><span class="focus-icon">💼</span><h3>Corporate Hiring</h3><p>Video interview AI tools screen millions of applicants using facial analysis and voice patterns — with evidence of bias against women, people of color, and disabled applicants.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports">
+  <div class="section-inner">
+    <div class="reports-header fade-in">
+      <div>
+        <div class="section-label">Research & Reports</div>
+        <h2 class="section-title">Our Published Work</h2>
+      </div>
+    </div>
+    <div class="reports-grid fade-in" id="reportsGrid">
+      <div class="report-empty">
+        <strong style="font-size:16px;color:var(--deep);">First report coming October 2025</strong>
+        <p>We're currently researching our first bias audit of COMPAS — the AI risk assessment tool used in Michigan courts. Sign up below to be notified when it publishes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid fade-in">
+      <div>
+        <div class="section-label">About Us</div>
+        <h2 class="section-title">Built by a student who got tired of waiting for adults to fix it.</h2>
+        <div class="about-quote">"The people most harmed by algorithmic bias are the least likely to know it's happening."</div>
+        <p class="about-body">The Algorithmic Justice Project was founded in 2026 by a Michigan high school student with a simple conviction: that serious policy research doesn't require a law degree, and that the communities most affected by AI bias deserve advocates who speak their language.</p>
+        <p class="about-body">We are a nonprofit incorporated in Michigan. Our research is independent, our reports are free, and our advocacy is driven entirely by evidence.</p>
+        <div class="about-founder">
+          <div class="founder-avatar">AJ</div>
+          <div class="founder-info">
+            <strong>Mithil Joshi — Founder & Executive Director</strong>
+            <span>The Algorithmic Justice Project · Michigan</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-item"><div class="about-card-dot"></div><div><strong>Michigan Nonprofit Corporation</strong><span>Incorporated April 22, 2026 · Entity ID 900201891</span></div></div>
+        <div class="about-card-item"><div class="about-card-dot"></div><div><strong>501(c)(3) Pending</strong><span>IRS tax-exempt application in progress</span></div></div>
+        <div class="about-card-item"><div class="about-card-dot"></div><div><strong>100% Independent</strong><span>No government funding. No corporate sponsors. Research driven by evidence alone.</span></div></div>
+        <div class="about-card-item"><div class="about-card-dot"></div><div><strong>Open Access</strong><span>All reports are free to read, share, and cite. Always.</span></div></div>
+        <div class="about-card-item"><div class="about-card-dot"></div><div><strong>Building Statewide</strong><span>Expanding to student chapters across Michigan in 2026.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title" style="color:white;">Press. Partnerships.<br/>Questions. Ideas.</h2>
+    </div>
+    <div class="contact-grid fade-in">
+      <div>
+        <p class="contact-text">We want to hear from journalists covering AI and civil rights, attorneys working on algorithmic accountability, community organizations interested in hosting a workshop, students who want to start a chapter, and anyone affected by algorithmic decision-making.</p>
+        <div class="contact-links">
+          <a href="mailto:thealgorithmicjusticeproject@gmail.com" class="contact-link"><div class="contact-link-icon">✉️</div>thealgorithmicjusticeproject@gmail.com</a>
+          <a href="https://twitter.com/AlgoJusticeProject" class="contact-link" target="_blank"><div class="contact-link-icon">𝕏</div>@AlgoJusticeProject</a>
+          <a href="https://linkedin.com/company/algorithmic-justice-project" class="contact-link" target="_blank"><div class="contact-link-icon">in</div>LinkedIn</a>
+          <a href="https://instagram.com/thealgorithmicjusticeproject" class="contact-link" target="_blank"><div class="contact-link-icon">◻</div>@thealgorithmicjusticeproject</a>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-group"><label>Your Name</label><input type="text" id="fname" placeholder="Full name" required/></div>
+        <div class="form-group"><label>Email</label><input type="email" id="femail" placeholder="your@email.com" required/></div>
+        <div class="form-group"><label>I am a...</label>
+          <select id="frole">
+            <option value="">Select one</option>
+            <option>Journalist / Reporter</option>
+            <option>Attorney / Legal Professional</option>
+            <option>Community Organization</option>
+            <option>Student / Researcher</option>
+            <option>Government / Policy Professional</option>
+            <option>Affected Individual</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="fmessage" placeholder="Tell us what you're working on or how we can help..." required></textarea></div>
+        <button type="button" class="form-submit" id="formBtn" onclick="submitForm()">Send Message</button>
+        <p id="formSuccess" style="display:none;color:#7F77DD;font-size:14px;margin-top:1rem;text-align:center;font-weight:500;">✓ Message sent! We'll be in touch within 48 hours.</p>
+        <p id="formError" style="display:none;color:#ff6b6b;font-size:14px;margin-top:1rem;text-align:center;">Something went wrong. Email us directly at thealgorithmicjusticeproject@gmail.com</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">The Algorithmic Justice Project</div>
+    <div class="footer-links"><a href="#mission">Mission</a><a href="#reports">Reports</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+    <div class="footer-copy">© 2026 · Michigan Nonprofit · 501(c)(3) Pending</div>
+  </div>
+</footer>
+
+<script>
+// ── SITE DATA — ask Claude to update these for you ──
+const SITE_DATA = {
+  stats: {
+    reports: 0,
+    people: 0,
+    states: 1,
+    year: 2026
+  },
+  reports: [
+    // Reports will appear here when published
+    // Example of how a report looks:
+    // {
+    //   title: "COMPAS Bias Audit: Michigan Courts",
+    //   summary: "An analysis of racial disparities in COMPAS scoring across Michigan criminal courts.",
+    //   type: "Bias Audit",
+    //   date: "October 2025",
+    //   url: "https://your-pdf-link.com"
+    // }
+  ]
+};
+
+// ── STATE ──
+let stats = SITE_DATA.stats;
+let reports = SITE_DATA.reports;
+
+// ── INIT DATA ──
+function fetchData() {
+  renderStats();
+  renderReports();
+}
+
+// ── RENDER STATS ──
+function renderStats() {
+  document.getElementById('stat-reports').textContent = stats.reports;
+  document.getElementById('stat-people').textContent = Number(stats.people).toLocaleString();
+  document.getElementById('stat-states').textContent = stats.states;
+  document.getElementById('stat-year').textContent = stats.year;
+}
+
+// ── RENDER REPORTS ──
+function renderReports() {
+  const grid = document.getElementById('reportsGrid');
+  if (!reports.length) {
+    grid.innerHTML = `<div class="report-empty">
+      <strong style="font-size:16px;color:var(--deep);">First report coming October 2025</strong>
+      <p>We're currently researching our first bias audit of COMPAS — the AI risk assessment tool used in Michigan courts.</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = reports.map(r => `
+    <a href="${r.url}" class="report-card" target="_blank" rel="noopener">
+      <div class="report-meta">
+        <span class="report-tag">${r.type || 'Report'}</span>
+        <span class="report-date">${r.date || ''}</span>
+      </div>
+      <h3>${r.title}</h3>
+      <p>${r.summary}</p>
+      <span class="report-link">Read the full report →</span>
+    </a>
+  `).join('');
+}
+
+// ── ADMIN (redirect to Google Sheet) ──
+function openAdmin() {
+  document.getElementById('adminOverlay').classList.add('open');
+  document.getElementById('passwordScreen').style.display = '';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwErr').style.display = 'none';
+  setTimeout(() => document.getElementById('pwInput').focus(), 100);
+}
+
+function closeAdmin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+}
+
+function checkPw() {
+  const val = document.getElementById('pwInput').value;
+  if (val === 'ajp2026') {
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = '';
+  } else {
+    document.getElementById('pwErr').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function refreshSite() {
+  closeAdmin();
+  fetchData();
+  showToast('Refreshing data from Google Sheets...');
+}
+
+// Close modal on overlay click
+document.getElementById('adminOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdmin();
+});
+
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── CONTACT FORM ──
+async function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const role = document.getElementById('frole').value;
+  const message = document.getElementById('fmessage').value.trim();
+  if (!name || !email || !message) { alert('Please fill in your name, email, and message.'); return; }
+  const btn = document.getElementById('formBtn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://formspree.io/f/xzdywlzr', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, role, message, _replyto: email, _subject: `New message from ${name} — Algorithmic Justice Project` })
+    });
+    if (res.ok) {
+      document.getElementById('contactForm').querySelectorAll('input,textarea,select').forEach(el => el.value = '');
+      document.getElementById('formSuccess').style.display = 'block';
+      document.getElementById('formError').style.display = 'none';
+      btn.textContent = 'Sent!';
+    } else { throw new Error(); }
+  } catch {
+    document.getElementById('formError').style.display = 'block';
+    btn.textContent = 'Send Message';
+    btn.disabled = false;
+  }
+}
+
+function refreshSite() {
+  closeAdmin();
+  fetchData();
+  showToast('Refreshing data...');
+}
+
+// Init
+fetchData();
+</script>
+</body>
+</html>
